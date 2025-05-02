@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import '../NavbarWithSlideMenu.css';
+import logo from '../Assets/AXIS_LOGO.png';
+import axios from 'axios';
 
-const gateways = ['CybS', 'MPGS', 'WIBMO'];
+const gateways = ['CYBS', 'MPGS', 'WIBMO'];
 const modes = ['LIVE', 'TEST'];
-const integrations = ['Direct', 'Aggregator'];
+const integrations = ['MERCHANT', 'AGGREGATOR'];
 const apiTypes = ['REST API', 'SOAP API'];
 
 export const HomePage = () => {
@@ -13,6 +17,8 @@ export const HomePage = () => {
   const [modeIndex, setModeIndex] = useState(0);
   const [integrationIndex, setIntegrationIndex] = useState(0);
   const [apiTypeIndex, setApiTypeIndex] = useState(0);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleProceed = () => {
     if (!selectedGateway) return;
@@ -32,15 +38,40 @@ export const HomePage = () => {
   };
 
   return (
-    <div style={{ padding: '2rem',backgroundColor: '#F0F8FF', fontFamily: 'sans-serif' }}>
-      <div style={{ borderBottom: '5px solid #ccc', paddingBottom: '0.5rem', display: 'flex', justifyContent: 'space-between' }}>
-        <div><strong>Logo</strong></div>
-        <div style={{ fontSize: '1.5rem' }}>≡</div>
+    <div style={{ padding: '2rem',backgroundColor: '#8ba0a4', fontFamily: 'sans-serif' }}>
+      <div style={{ borderBottom: '5px solid #ccc', paddingBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
+        <div>
+        <img src={logo} alt="Logo" style={{ height: '40px' }} />
+        </div>
+
+        
+        <div className="menu-icon" onClick={() => setIsOpen(!isOpen)}>
+        ☰
+      </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="side-menu"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          >
+            <ul>
+              <li onClick={() => setIsOpen(false)}>Home</li>
+              <li onClick={() => setIsOpen(false)}>About</li>
+              <li onClick={() => setIsOpen(false)}>Settings</li>
+              <li onClick={() => setIsOpen(false)}>Logout</li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
       </div>
 
       <h1 style={{ textAlign: 'center', fontSize: '2rem', margin: '2rem 0', color: 'purple' }}>Payment Gateway Services</h1>
 
-      <div style={{ border: '3px',backgroundColor: '#e5ccff', borderRadius: '45px', padding: '3rem', display: 'flex',color:'white', justifyContent: 'space-around', margin: '2rem 0', marginRight: '6rem', marginLeft: '7rem' }}>
+      <div style={{ border: '3px', backgroundColor: '#c0c0c0', borderRadius: '45px', padding: '3rem', display: 'flex',color:'white', justifyContent: 'space-around', margin: '2rem 0', marginRight: '6rem', marginLeft: '7rem' }}>
         {gateways.map(gw => (
           <div key={gw} onClick={() => setSelectedGateway(gw)} style={{
             border: '2px',
@@ -50,6 +81,7 @@ export const HomePage = () => {
             textAlign: 'center',
             cursor: 'pointer',
             backgroundColor: selectedGateway === gw ? '#99004c' : '#cc0066',
+            
           }}>
             <div style={{ fontWeight: 'bold' }}>{gw}</div>
             <div style={{ marginTop: '3rem' }}>
@@ -65,7 +97,7 @@ export const HomePage = () => {
         ))}
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '1.5rem', marginRight: '9rem', marginLeft: '10rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '0.8rem', marginRight: '9rem', marginLeft: '10rem' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={buttonStyle}>
             <span style={arrowStyle} onClick={() => changeOption(setModeIndex, modeIndex, modes, -1)}>&lt;</span>
@@ -109,7 +141,7 @@ export const HomePage = () => {
           Proceed
         </button>
       </div>
-      <div style={{ borderBottom: '5px solid #ccc', paddingBottom: '2rem', display: 'flex', justifyContent: 'space-between' }}></div>
+      <div style={{ borderBottom: '5px solid #ccc',marginTop: '0.8rem', paddingBottom: '0.5rem', display: 'flex', justifyContent: 'space-between' }}></div>
     </div>
   );
 };
@@ -132,7 +164,7 @@ const arrowStyle = {
 };
 
 const descriptionStyle = {
-  color: 'gray',
-  fontSize: '0.8rem',
+  color: '#004343',
+  fontSize: '0.9rem',
   marginTop: '0.25rem'
 };
