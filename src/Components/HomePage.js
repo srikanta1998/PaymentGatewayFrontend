@@ -32,7 +32,7 @@ export const HomePage = () => {
   };
 
   return (
-    <div style={{ padding: '2rem',backgroundColor: 'white', fontFamily: 'sans-serif' }}>
+    <div style={{ padding: '2rem',backgroundColor: '#F0F8FF', fontFamily: 'sans-serif' }}>
       <div style={{ borderBottom: '5px solid #ccc', paddingBottom: '0.5rem', display: 'flex', justifyContent: 'space-between' }}>
         <div><strong>Logo</strong></div>
         <div style={{ fontSize: '1.5rem' }}>≡</div>
