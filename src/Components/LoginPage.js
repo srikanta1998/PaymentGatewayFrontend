@@ -57,7 +57,7 @@ export const LoginPage = () => {
 
     return(
 
-        <div className='App2'>
+        <div className='App2'> 
             <div className='auth-form-container'>
                 <h2>Admin Login</h2><hr/>
                 <form className='login-form' onSubmit={handleLogin}>

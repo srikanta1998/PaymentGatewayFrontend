@@ -7,29 +7,65 @@ import axios from 'axios';
 
 const gateways = ['CYBS', 'MPGS', 'WIBMO'];
 const modes = ['LIVE', 'TEST'];
-const integrations = ['MERCHANT', 'AGGREGATOR'];
-const apiTypes = ['REST API', 'SOAP API'];
+const relation = ['MERCHANT', 'AGGREGATOR'];
+const integration = ['REST API', 'SOAP API'];
 
 export const HomePage = () => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [selectedGateway, setSelectedGateway] = useState(null);
   const [modeIndex, setModeIndex] = useState(0);
+  const [relationIndex, setRelationIndex] = useState(0);
   const [integrationIndex, setIntegrationIndex] = useState(0);
-  const [apiTypeIndex, setApiTypeIndex] = useState(0);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const handleProceed = () => {
     if (!selectedGateway) return;
-    navigate('/next', {
-      state: {
-        gateway: selectedGateway,
-        mode: modes[modeIndex],
-        integration: integrations[integrationIndex],
-        apiType: apiTypes[apiTypeIndex],
-      },
-    });
+    
+    if(selectedGateway === "CYBS" && integration[integrationIndex] ==="SOAP API"){
+        navigate('/cybs_soap', {
+            state: {
+              gateway: selectedGateway,
+              mode: modes[modeIndex],
+              relation: relation[relationIndex],
+              integration: integration[integrationIndex],
+            },
+          });
+    }
+
+    else if(selectedGateway === "CYBS" && integration[integrationIndex] ==="REST API"){
+        navigate('/cybs_rest', {
+            state: {
+              gateway: selectedGateway,
+              mode: modes[modeIndex],
+              relation: relation[relationIndex],
+              integration: integration[integrationIndex]
+            },
+          });
+    }
+
+    else if(selectedGateway === "MPGS"){
+      navigate('/mpgs', {
+          state: {
+            gateway: selectedGateway,
+            mode: modes[modeIndex],
+            relation: relation[relationIndex]            
+          },
+        });
+  }
+
+  else if(selectedGateway === "WIBMO"){
+    
+    navigate('/wibmo', {
+        state: {
+          gateway: selectedGateway,
+          mode: modes[modeIndex],
+          relation: relation[relationIndex]
+        },
+      });
+}
+    
   };
 
   const changeOption = (setter, currentIndex, list, direction) => {
@@ -45,9 +81,7 @@ export const HomePage = () => {
         </div>
 
         
-        <div className="menu-icon" onClick={() => setIsOpen(!isOpen)}>
-        ☰
-      </div>
+        <div className="menu-icon" onClick={() => setIsOpen(!isOpen)}>☰</div>
 
       <AnimatePresence>
         {isOpen && (
@@ -109,18 +143,18 @@ export const HomePage = () => {
 
         <div style={{ textAlign: 'center' }}>
           <div style={buttonStyle}>
-            <span style={arrowStyle} onClick={() => changeOption(setIntegrationIndex, integrationIndex, integrations, -1)}>&lt;</span>
-            {integrations[integrationIndex]}
-            <span style={arrowStyle} onClick={() => changeOption(setIntegrationIndex, integrationIndex, integrations, 1)}>&gt;</span>
+            <span style={arrowStyle} onClick={() => changeOption(setRelationIndex, relationIndex, relation, -1)}>&lt;</span>
+            {relation[relationIndex]}
+            <span style={arrowStyle} onClick={() => changeOption(setRelationIndex, relationIndex, relation, 1)}>&gt;</span>
           </div>
           <div style={descriptionStyle}>Relation</div>
         </div>
 
         <div style={{ textAlign: 'center' }}>
           <div style={buttonStyle}>
-            <span style={arrowStyle} onClick={() => changeOption(setApiTypeIndex, apiTypeIndex, apiTypes, -1)}>&lt;</span>
-            {apiTypes[apiTypeIndex]}
-            <span style={arrowStyle} onClick={() => changeOption(setApiTypeIndex, apiTypeIndex, apiTypes, 1)}>&gt;</span>
+            <span style={arrowStyle} onClick={() => changeOption(setIntegrationIndex, integrationIndex, integration, -1)}>&lt;</span>
+            {integration[integrationIndex]}
+            <span style={arrowStyle} onClick={() => changeOption(setIntegrationIndex, integrationIndex, integration, 1)}>&gt;</span>
           </div>
           <div style={descriptionStyle}>Integration</div>
         </div>

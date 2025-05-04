@@ -1,0 +1,54 @@
+.gateway-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .tab-section {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .tab {
+    cursor: pointer;
+    color: purple;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+  }
+  
+  .tab.active {
+    font-weight: bold;
+    border-color: purple;
+  }
+  
+  .content-box {
+    margin-top: 20px;
+  }
+  
+  input[type="text"] {
+    padding: 8px;
+    margin-right: 10px;
+    width: 250px;
+  }
+  
+  .clear-btn,
+  .filter-btn {
+    background-color: transparent;
+    border: none;
+    color: purple;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+  }
+  
+  table th,
+  table td {
+    text-align: left;
+    padding: 8px;
+  }
+  
