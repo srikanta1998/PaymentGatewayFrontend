@@ -1,0 +1,22 @@
+{
+    "platform": "",
+    "keyID": "",
+    "secret": "",
+    "mid": "",
+    "parentMID": "",
+    "HTTPMethod": "POST",
+    "URL": "https://api.in.cybersource.com/Enrollment",
+    "RequestBody": {
+        "clientReferenceInformation": {
+            "code": ""
+        },
+        "paymentInformation": {
+            "card": {
+                "type": "",
+                "expirationMonth": "",
+                "expirationYear": "",
+                "number": ""
+            }
+        }
+    }
+}

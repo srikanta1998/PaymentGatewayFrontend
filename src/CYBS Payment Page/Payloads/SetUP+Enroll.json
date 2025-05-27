@@ -1,0 +1,63 @@
+{
+    "platform": "",
+    "keyID": "",
+    "secret": "",
+    "mid": "",
+    "parentMID": "",
+    "HTTPMethod": "POST",
+    "URL": "https://api.in.cybersource.com/SetUP+Enrollment",
+    "RequestBody": {
+        
+  "clientReferenceInformation": {
+    "code": ""
+  },
+  "orderInformation": {
+    "amountDetails": {
+      "currency": "USD",
+      "totalAmount": "10.99"
+    },
+    "billTo": {
+      "address1": "1 Market St",
+      "administrativeArea": "CA",
+      "country": "US",
+      "firstName": "John",
+      "lastName": "Doe",
+      "phoneNumber": "4158880000",
+      "email": "test@cybs.com",
+      "postalCode": "94105"
+    }
+  },
+  "paymentInformation": {
+    "card": {
+      "type": "",
+      "expirationMonth": "",
+      "expirationYear": "",
+      "number": ""
+    }
+  },
+  "deviceInformation": {
+    "ipAddress": "139.130.4.5",
+    "httpAcceptContent": "test",
+    "httpBrowserLanguage": "en_us",
+    "httpBrowserJavaEnabled": false,
+    "httpBrowserJavaScriptEnabled": false,
+    "httpBrowserColorDepth": "24",
+    "httpBrowserScreenHeight": "100000",
+    "httpBrowserScreenWidth": "100000",
+    "httpBrowserTimeDifference": "300",
+    "userAgentBrowserValue": "GxKnLy8TFDUFxJP1t"
+  },
+  "merchantInformation": {
+    "merchantDescriptor": {
+      "name": ""
+    },
+    "merchantName": ""
+  },
+  "consumerAuthenticationInformation": {
+    "deviceChannel": "BROWSER",
+    "requestorId": "",
+    "requestorName": "",
+    "transactionMode": "eCommerce"
+        }
+    }
+}

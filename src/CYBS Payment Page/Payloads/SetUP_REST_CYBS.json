@@ -1,0 +1,22 @@
+{
+    "platform": "",
+    "keyID": "",
+    "secret": "",
+    "mid": "",
+    "parentMID": "",
+    "HTTPMethod": "POST",
+    "URL": "https://api.in.cybersource.com/",
+    "RequestBody": {
+        "clientReferenceInformation": {
+            "code": ""
+        },
+        "paymentInformation": {
+            "card": {
+                "type": "001",
+                "expirationMonth": "12",
+                "expirationYear": "2025",
+                "number": "4000000000002503"
+            }
+        }
+    }
+}
