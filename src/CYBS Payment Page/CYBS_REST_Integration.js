@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { useEffect } from "react";
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import axios from 'axios';
 import Rupay_Logo from '../Assets/Rupay_Logo.png';
 import Visa_Logo from '../Assets/VISA_Logo.png';
@@ -16,7 +16,10 @@ import SelectAPI from "../CYBS Payment Page/Payloads/SelectAPI.json"
 
 export const CYBS_REST = () => {
 
-  const [requestPayload, setRequestPayload] = useState("");
+  const location = useLocation();
+    const {gateway, mode, relation, integration, modeIndex, integrationIndex, relationIndex } = location.state || {};
+
+  //const [requestPayload, setRequestPayload] = useState("");
 
   const [parentMID, setParentMID] = useState("");
   const [merchantMID, setMerchantMID] = useState("");
@@ -116,7 +119,9 @@ const postUserData = () => {
     }
 
     // ✅ Update state with modified JSON
+    //alert("Mode is - "+mode);
     alert("json - "+JSON.stringify(json));
+    setRequestBody(JSON.stringify(json.RequestBody, null, 2));
     setDispatchPayload(json);
 
   } catch (err) {
@@ -183,7 +188,7 @@ const postCardData = () => {
       delete json.RequestBody.paymentInformation.tokenizedCard;
     }
 
-    // Final update
+    setRequestBody(JSON.stringify(json.RequestBody, null, 2));
     setDispatchPayload(json);
   } catch (err) {
     console.error("Invalid JSON format", err);
@@ -321,6 +326,7 @@ const postCardData = () => {
   const [httpMethod, setHTTPMethod] = useState("");
   const [dispatchPayload, setDispatchPayload] = useState("");
 
+
   useEffect(() => {
   const loadApiJson = async () => {
     if (transaction[transactionIndex] === 'Single API' ) {
@@ -342,6 +348,9 @@ const postCardData = () => {
       setUrl(payloadData.URL);
       setHTTPMethod(payloadData.HTTPMethod);
 
+      
+      
+
       // Inject MRN if available
       if (payloadData.RequestBody?.clientReferenceInformation) {
            payloadData.RequestBody.clientReferenceInformation.code = mrn;
@@ -356,6 +365,7 @@ const postCardData = () => {
       }
 
       // 🔑 Add MID, Key ID, Secret
+      payloadData.platform = mode;
       payloadData.keyID = keyID;
       payloadData.secret = secretKey;
       payloadData.mid = merchantMID;
@@ -364,58 +374,16 @@ const postCardData = () => {
       payloadData.parentMID = parentMID;
       }
 
-      // Update UI state if needed
+      
       setRequestBody(JSON.stringify(payloadData.RequestBody, null, 2));
+      setDispatchPayload(payloadData);
 
-      // 🔁 Now pass this full payloadData to backend
-      setDispatchPayload(JSON.stringify(payloadData, null, 2));  // or whatever function you're using
-      //setDispatchPayload(payloadData); // ✅ don't stringify!
-
-      }
-      // try {
-      //   // Dynamically import the corresponding JSON
-        
-      //   let apiPayload;
-
-      //   if (selectedApiType) {
-      //    apiPayload = await import(`../CYBS Payment Page/Payloads/${selectedApiType}.json`);
-      //   } else {
-      //      apiPayload = await import(`../CYBS Payment Page/Payloads/SelectAPI.json`);
-      //   }
-
-      //   // Extract values
-      //   const { URL, HTTPMethod, RequestBody } = apiPayload.default;
-
-      //   setUrl(URL);
-      //   setHTTPMethod(HTTPMethod);
-
-      //   // Inject MRN if available
-      //   if (RequestBody?.clientReferenceInformation) {
-      //     RequestBody.clientReferenceInformation.code = mrn;
-      //   }
-
-      //   if(apiTypes !=='SetUP') {
-
-      //     if(isEnabledToggle2) {
-
-      //       RequestBody.consumerAuthenticationInformation.requestorId = requestorID;
-      //       RequestBody.consumerAuthenticationInformation.requestorName = pfID
-      //     }
-          
-      //   }
-
-      //   setRequestBody(JSON.stringify(RequestBody, null, 2));
-        
-      // }
-        catch (error) {
+      } catch (error) {
         console.error(`Could not load JSON for ${selectedApiType}:`, error);
       }
     } else {
 
       try {
-        // Dynamically import the corresponding JSON
-
-        // setSelectedFullAPIType("Select Flow");
                
         let apiPayload;
 
@@ -470,12 +438,13 @@ const postCardData = () => {
 
     try {
                     
-        //const response = await axios.post('http://localhost:8080/api/payments/enrollment',requestBody,
-        //{headers: {'Content-Type': 'application/json'}})
-        
-        //const data = response.data;
-        console.log(dispatchPayload);
         alert("RequestBody - "+JSON.stringify(dispatchPayload));
+        const response = await axios.post('http://localhost:8080/api/payments/enrollment',JSON.stringify(dispatchPayload),
+        {headers: {'Content-Type': 'application/json'}})
+        
+        const data = response.data;
+        console.log("Request Body - "+dispatchPayload);
+        console.log("Response Body - "+data);
         
     }catch (error) {
           console.error(error);

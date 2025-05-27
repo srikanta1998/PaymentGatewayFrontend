@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 import '../NavbarWithSlideMenu.css';
 import logo from '../Assets/AXIS_LOGO.png';
 import axios from 'axios';
